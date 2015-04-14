@@ -11,6 +11,7 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var dotenv = require('dotenv');
 var Instagram = require('instagram-node-lib');
+var Facebook = require('fbgraph');
 var mongoose = require('mongoose');
 var app = express();
 
@@ -22,13 +23,15 @@ dotenv.load();
 var INSTAGRAM_CLIENT_ID = process.env.INSTAGRAM_CLIENT_ID;
 var INSTAGRAM_CLIENT_SECRET = process.env.INSTAGRAM_CLIENT_SECRET;
 var INSTAGRAM_CALLBACK_URL = process.env.INSTAGRAM_CALLBACK_URL;
-// var INSTAGRAM_ACCESS_TOKEN = "";
+var INSTAGRAM_ACCESS_TOKEN = "";
+
 Instagram.set('client_id', INSTAGRAM_CLIENT_ID);
 Instagram.set('client_secret', INSTAGRAM_CLIENT_SECRET);
 
 var FACEBOOK_CLIENT_ID = process.env.FACEBOOK_CLIENT_ID;
 var FACEBOOK_CLIENT_SECRET = process.env.FACEBOOK_CLIENT_SECRET;
 var FACEBOOK_CALLBACK_URL = process.env.FACEBOOK_CALLBACK_URL;
+var FACEBOOK_ACCESS_TOKEN = "";
 // var FACEBOOK_SCOPE = { email, user_about_me, user_birthday, user_location, publish_stream};
 
 
@@ -63,7 +66,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new InstagramStrategy({
     clientID: INSTAGRAM_CLIENT_ID,
     clientSecret: INSTAGRAM_CLIENT_SECRET,
-    callbackURL: INSTAGRAM_CALLBACK_URL
+    callbackURL: "http://cogs121-5072.herokuapp.com/account"
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
@@ -91,7 +94,7 @@ passport.use(new InstagramStrategy({
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_CLIENT_ID,
     clientSecret: FACEBOOK_CLIENT_SECRET,
-    callbackURL: FACEBOOK_CALLBACK_URL
+    callbackURL: "http://cogs121-5072.herokuapp.com/account"
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
@@ -212,16 +215,12 @@ app.get('/auth/instagram/callback',
 app.get('/auth/facebook',
   passport.authenticate('facebook'),
   function(req, res){
-    
+
   });
 
 
-  });
 app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { failureRedirect: '/login'}),
-  function(req, res) {
-    res.redirect('/account');
-  });
+  passport.authenticate('facebook', { successRedirect: '/account', failureRedirect: '/login'}));
 
 app.get('/logout', function(req, res){
   req.logout();
