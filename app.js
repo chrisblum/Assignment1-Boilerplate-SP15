@@ -2,6 +2,7 @@
 var express = require('express');
 var passport = require('passport');
 var InstagramStrategy = require('passport-instagram').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 var http = require('http');
 var path = require('path');
 var handlebars = require('express-handlebars');
@@ -12,7 +13,6 @@ var dotenv = require('dotenv');
 var Instagram = require('instagram-node-lib');
 var mongoose = require('mongoose');
 var app = express();
-var Facebook = require('fbgraph');
 
 //local dependencies
 var models = require('./models');
@@ -29,7 +29,7 @@ Instagram.set('client_secret', INSTAGRAM_CLIENT_SECRET);
 var FACEBOOK_CLIENT_ID = process.env.FACEBOOK_CLIENT_ID;
 var FACEBOOK_CLIENT_SECRET = process.env.FACEBOOK_CLIENT_SECRET;
 var FACEBOOK_CALLBACK_URL = process.env.FACEBOOK_CALLBACK_URL;
-var FACEBOOK_SCOPE = { email, user_about_me, user_birthday, user_location, publish_stream};
+// var FACEBOOK_SCOPE = { email, user_about_me, user_birthday, user_location, publish_stream};
 
 
 //connect to database
@@ -64,6 +64,34 @@ passport.use(new InstagramStrategy({
     clientID: INSTAGRAM_CLIENT_ID,
     clientSecret: INSTAGRAM_CLIENT_SECRET,
     callbackURL: INSTAGRAM_CALLBACK_URL
+  },
+  function(accessToken, refreshToken, profile, done) {
+    // asynchronous verification, for effect...
+    models.User.findOrCreate({
+      "name": profile.username,
+      "id": profile.id,
+      "access_token": accessToken 
+    }, function(err, user, created) {
+      
+      // created will be true here
+      models.User.findOrCreate({}, function(err, user, created) {
+        // created will be false here
+        process.nextTick(function () {
+          // To keep the example simple, the user's Instagram profile is returned to
+          // represent the logged-in user.  In a typical application, you would want
+          // to associate the Instagram account with a user record in your database,
+          // and return that user instead.
+          return done(null, profile);
+        });
+      })
+    });
+  }
+));
+
+passport.use(new FacebookStrategy({
+    clientID: FACEBOOK_CLIENT_ID,
+    clientSecret: FACEBOOK_CLIENT_SECRET,
+    callbackURL: FACEBOOK_CALLBACK_URL
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
@@ -178,36 +206,14 @@ app.get('/auth/instagram/callback',
     res.redirect('/account');
   });
 
-app.get('/auth/facebook',function(req, res){
 
-if (!req.query.code) {
-    var authUrl = Facebook.getOauthUrl({
-        "client_id":     FACEBOOK_CLIENT_ID
-      , "redirect_uri":  FACEBOOK_CALLBACK_URL
-      , "scope":         FACEBOOK_SCOPE
-    });
 
-    if (!req.query.error) { //checks whether a user denied the app facebook login/permissions
-      res.redirect(authUrl);
-    } else {  //req.query.error == 'access_denied'
-      res.send('access denied');
-    }
-    return;
-  }
 
-  // code is set
-  // we'll send that and get the access token
-  Facebook.authorize({
-      "client_id":      FACEBOOK_CLIENT_ID
-    , "redirect_uri":   FACEBOOK_CALLBACK_URL
-    , "client_secret":  FACEBOOK_CLIENT_SECRET
-    , "code":           req.query.code
-  }, function (err, facebookRes) {
-    res.redirect('/account');
+app.get('/auth/facebook',
+  passport.authenticate('facebook'),
+  function(req, res){
+    
   });
-
-});
-
 
 
   });
