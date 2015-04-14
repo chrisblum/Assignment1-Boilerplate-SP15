@@ -37,7 +37,7 @@ var FACEBOOK_ACCESS_TOKEN = "";
 
 //connect to database
 // mongoose.connect(process.env.MONGODB_CONNECTION_URL);
-mongoose.connect(process.env.MONGOLAB_URL || 'mongodb://localhost/Assignment1-Boilerplate-SP15');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/Assignment1-Boilerplate-SP15');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
@@ -67,7 +67,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new InstagramStrategy({
     clientID: INSTAGRAM_CLIENT_ID,
     clientSecret: INSTAGRAM_CLIENT_SECRET,
-    callbackURL: "http://cogs121-5072.herokuapp.com/auth/instagram"
+    callbackURL: "http://cogs121-5072.herokuapp.com/auth/instagram/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
