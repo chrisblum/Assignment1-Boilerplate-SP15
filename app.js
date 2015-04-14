@@ -12,6 +12,7 @@ var dotenv = require('dotenv');
 var Instagram = require('instagram-node-lib');
 var mongoose = require('mongoose');
 var app = express();
+var Facebook = require('fbgraph');
 
 //local dependencies
 var models = require('./models');
@@ -21,9 +22,15 @@ dotenv.load();
 var INSTAGRAM_CLIENT_ID = process.env.INSTAGRAM_CLIENT_ID;
 var INSTAGRAM_CLIENT_SECRET = process.env.INSTAGRAM_CLIENT_SECRET;
 var INSTAGRAM_CALLBACK_URL = process.env.INSTAGRAM_CALLBACK_URL;
-var INSTAGRAM_ACCESS_TOKEN = "";
+// var INSTAGRAM_ACCESS_TOKEN = "";
 Instagram.set('client_id', INSTAGRAM_CLIENT_ID);
 Instagram.set('client_secret', INSTAGRAM_CLIENT_SECRET);
+
+var FACEBOOK_CLIENT_ID = process.env.FACEBOOK_CLIENT_ID;
+var FACEBOOK_CLIENT_SECRET = process.env.FACEBOOK_CLIENT_SECRET;
+var FACEBOOK_CALLBACK_URL = process.env.FACEBOOK_CALLBACK_URL;
+var FACEBOOK_SCOPE = { email, user_about_me, user_birthday, user_location, publish_stream};
+
 
 //connect to database
 mongoose.connect(process.env.MONGODB_CONNECTION_URL);
@@ -167,6 +174,45 @@ app.get('/auth/instagram',
 //   which, in this example, will redirect the user to the home page.
 app.get('/auth/instagram/callback', 
   passport.authenticate('instagram', { failureRedirect: '/login'}),
+  function(req, res) {
+    res.redirect('/account');
+  });
+
+app.get('/auth/facebook',function(req, res){
+
+if (!req.query.code) {
+    var authUrl = Facebook.getOauthUrl({
+        "client_id":     FACEBOOK_CLIENT_ID
+      , "redirect_uri":  FACEBOOK_CALLBACK_URL
+      , "scope":         FACEBOOK_SCOPE
+    });
+
+    if (!req.query.error) { //checks whether a user denied the app facebook login/permissions
+      res.redirect(authUrl);
+    } else {  //req.query.error == 'access_denied'
+      res.send('access denied');
+    }
+    return;
+  }
+
+  // code is set
+  // we'll send that and get the access token
+  Facebook.authorize({
+      "client_id":      FACEBOOK_CLIENT_ID
+    , "redirect_uri":   FACEBOOK_CALLBACK_URL
+    , "client_secret":  FACEBOOK_CLIENT_SECRET
+    , "code":           req.query.code
+  }, function (err, facebookRes) {
+    res.redirect('/account');
+  });
+
+});
+
+
+
+  });
+app.get('/auth/facebook/callback', 
+  passport.authenticate('facebook', { failureRedirect: '/login'}),
   function(req, res) {
     res.redirect('/account');
   });
