@@ -120,6 +120,8 @@ passport.use(new FacebookStrategy({
   }
 ));
 
+graph.setAccessToken(access_token);
+
 
 //Configures the Template engine
 app.engine('handlebars', handlebars({defaultLayout: 'layout'}));
@@ -219,7 +221,7 @@ app.get('/auth/instagram/callback',
 
 
 app.get('/auth/facebook',
-  passport.authenticate('facebook', { scope: ['read_stream', 'email', 'user_birthday']}),
+  passport.authenticate('facebook', { scope: ['public_profile', 'user_friends', 'email']}),
   function(req, res){
 
   });
