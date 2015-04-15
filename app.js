@@ -121,7 +121,7 @@ passport.use(new FacebookStrategy({
       })
     }),
 
-    graph.setAccessToken(access_token);
+    graph.setAccessToken(accessToken);
   }
 ));
 
