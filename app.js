@@ -171,9 +171,9 @@ app.get('/login', function(req, res){
 });
 
 app.get('/account', ensureAuthenticated, function(req, res){
-  
-  graph.get('/me/friends/', function(err,data) {
-    console.log(data);
+
+  graph.get('/me/friends/', function(err,res) {
+    console.log(res);
 });
 
   res.render('account', {user: req.user});
