@@ -172,7 +172,9 @@ app.get('/login', function(req, res){
 
 app.get('/account', ensureAuthenticated, function(req, res){
 
-  graph.setAccessToken(req.user.access_token);
+  var query  = models.User.where({ name: req.user.username });
+
+  graph.setAccessToken(query.access_token);
   console.log(req.user.access_token);
   graph.get('/me', function(err,res) {
     console.log(res);
