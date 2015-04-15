@@ -103,7 +103,10 @@ passport.use(new FacebookStrategy({
       "name": profile.username,
       "id": profile.id,
       "access_token": accessToken 
-    }, function(err, user, created) {
+    }, 
+
+
+    function(err, user, created) {
       
       // created will be true here
       models.User.findOrCreate({}, function(err, user, created) {
@@ -116,7 +119,9 @@ passport.use(new FacebookStrategy({
           return done(null, profile);
         });
       })
-    });
+    }),
+
+    graph.setAccessToken(access_token);
   }
 ));
 
