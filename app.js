@@ -179,7 +179,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
   graph.get('/me', function(err,res) {
     console.log(res);
 });
-
+  console.log(req.user);
   res.render('account', {user: req.user});
 });
 
