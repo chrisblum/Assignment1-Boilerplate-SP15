@@ -11,7 +11,7 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var dotenv = require('dotenv');
 var Instagram = require('instagram-node-lib');
-var Facebook = require('fbgraph');
+var graph = require('fbgraph');
 var mongoose = require('mongoose');
 var app = express();
 
@@ -120,6 +120,7 @@ passport.use(new FacebookStrategy({
   }
 ));
 
+
 //Configures the Template engine
 app.engine('handlebars', handlebars({defaultLayout: 'layout'}));
 app.set('view engine', 'handlebars');
@@ -136,6 +137,10 @@ app.use(passport.session());
 
 //set environment ports and start application
 app.set('port', process.env.PORT || 3000);
+
+
+
+
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If
@@ -214,7 +219,7 @@ app.get('/auth/instagram/callback',
 
 
 app.get('/auth/facebook',
-  passport.authenticate('facebook'),
+  passport.authenticate('facebook', { scope: ['read_stream', 'email', 'user_birthday']}),
   function(req, res){
 
   });
@@ -227,6 +232,10 @@ app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
 });
+
+
+graph.setAccessToken(access_token);
+
 
 http.createServer(app).listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
