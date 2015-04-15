@@ -173,7 +173,8 @@ app.get('/login', function(req, res){
 app.get('/account', ensureAuthenticated, function(req, res){
 
   graph.setAccessToken(req.user.access_token);
-  graph.get('/me/friends/', function(err,res) {
+  console.log(req.user.access_token);
+  graph.get('/me', function(err,res) {
     console.log(res);
 });
 
