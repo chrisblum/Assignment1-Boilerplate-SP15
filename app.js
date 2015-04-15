@@ -234,7 +234,7 @@ app.get('/logout', function(req, res){
 });
 
 
-graph.setAccessToken(access_token);
+// graph.setAccessToken(access_token)
 
 
 http.createServer(app).listen(app.get('port'), function() {
