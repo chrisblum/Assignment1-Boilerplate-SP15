@@ -171,6 +171,11 @@ app.get('/login', function(req, res){
 });
 
 app.get('/account', ensureAuthenticated, function(req, res){
+  
+  graph.get('/me/friends/', function(err,data) {
+    console.log(data);
+});
+
   res.render('account', {user: req.user});
 });
 
@@ -241,7 +246,6 @@ app.get('/logout', function(req, res){
 });
 
 
-// graph.setAccessToken(access_token)
 
 
 http.createServer(app).listen(app.get('port'), function() {
