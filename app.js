@@ -172,16 +172,16 @@ app.get('/login', function(req, res){
 
 app.get('/account', ensureAuthenticated, function(req, res){
 
-  var query  = models.User.where({ name: req.user.username });
+  graph
+    .setAccessToken(req.session.access_token);
+    .get('/me', function(err, data) {
+    console.log(data);
+  });
 
-  graph.setAccessToken(query.access_token);
-  console.log(req.user.access_token);
-  graph.get('/me', function(err,res) {
-    console.log(res);
-});
-  console.log(req.user);
+
   res.render('account', {user: req.user});
 });
+
 
 app.get('/photos', ensureAuthenticated, function(req, res){
   var query  = models.User.where({ name: req.user.username });
