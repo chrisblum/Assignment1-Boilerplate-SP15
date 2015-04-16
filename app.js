@@ -234,7 +234,7 @@ app.get('/auth/instagram/callback',
 
 
 app.get('/auth/facebook',
-  passport.authenticate('facebook', { scope: ['public_profile', 'user_friends', 'email']}),
+  passport.authenticate('facebook', { scope: ['public_profile', 'user_friends', 'email', 'read_stream']}),
   function(req, res){
 
   });
