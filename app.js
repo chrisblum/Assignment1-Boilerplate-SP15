@@ -244,6 +244,9 @@ app.get('/photos', ensureAuthenticated, function(req, res){
             console.log(item);
             tempJSON = {};
             tempJSON.url = item.images.low_resolution.url;
+            tempJSON.caption = item.caption.text;
+
+            console.log(item.caption.text);
             //insert json object into image array
             return tempJSON;
           });
