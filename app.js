@@ -197,7 +197,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
 
     console.log(data);
     console.log("spacer");
-    console.log(req.body);
+    console.log(res.body);
     res.render('account', {user: req.user, profile: data});
 
 
