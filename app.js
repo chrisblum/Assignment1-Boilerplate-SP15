@@ -220,7 +220,7 @@ app.get('/story', ensureAuthenticated, function(req, res){
   graph.setAccessToken(user.access_token);
   graph.get('/me/posts?fields=story', function(err, data) {
     console.log(data);
-    res.render('account', {user: req.user, profile: data});
+    res.render('story', {user: req.user, profile: data});
 
 });
 }});
