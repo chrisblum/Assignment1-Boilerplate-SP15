@@ -182,8 +182,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
   });
 console.log("placeholder");
 console.log(boom);
-  // res.render('account', {user: req.user});
-  res.render('account', {user: boom});
+  res.render('account', {user: req.user});
  
 };
 });
