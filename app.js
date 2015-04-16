@@ -176,12 +176,12 @@ app.get('/account', ensureAuthenticated, function(req, res){
     if (user) {
 
   graph.setAccessToken(user.access_token);
-  var boom = graph.get('/me', function(err, data) {
-    return data;
+  graph.get('/me', function(err, data) {
+    res.render('account', {user: data});
+
   });
-console.log("placeholder");
-console.log(boom);
-  res.render('account', {user: req.user});
+
+  // res.render('account', {user: req.user});
  
 };
 });
