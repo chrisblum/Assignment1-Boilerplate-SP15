@@ -195,7 +195,7 @@ app.get('/photos', ensureAuthenticated, function(req, res){
     if (err) return handleError(err);
     if (user) {
       // doc may be null if no document matched
-      Instagram.users.liked_by_self({
+      Instagram.users.self({
         access_token: user.access_token,
         complete: function(data) {
           //Map will iterate through the returned data obj
@@ -209,8 +209,7 @@ app.get('/photos', ensureAuthenticated, function(req, res){
             return tempJSON;
           });
 
-          var imageArr2 = imageArr[0:11];
-          res.render('photos', {photos: imageArr2, user: req.user});
+          res.render('photos', {photos: imageArr, user: req.user});
         }
       }); 
     }
