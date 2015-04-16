@@ -182,7 +182,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
 
 
   // res.render('account', {user: req.user});
-  res.render('account', data);
+  res.render('account', {user: data});
 };
 });
 
