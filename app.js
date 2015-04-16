@@ -176,7 +176,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
     if (user) {
 
   graph.setAccessToken(user.access_token);
-  graph.get('/me/posts?fields=story', function(err, data) {
+  graph.get('/me', function(err, data) {
     console.log(data);
     res.render('account', {user: req.user, profile: data});
 
