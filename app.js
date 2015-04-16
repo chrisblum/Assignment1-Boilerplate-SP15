@@ -177,7 +177,6 @@ app.get('/account', ensureAuthenticated, function(req, res){
 
   graph.setAccessToken(user.access_token);
   var boom = graph.get('/me', function(err, data) {
-    console.log(data);
     return data;
   });
 console.log("placeholder");
