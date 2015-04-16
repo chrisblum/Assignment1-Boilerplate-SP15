@@ -192,9 +192,9 @@ app.get('/account', ensureAuthenticated, function(req, res){
       method: "GET",
       relative_url: "me/posts?fields=story"
     }
-      ], function(err, res) {
-        console.log(res);
-    res.render('account', {user: req.user, profile: res});
+      ], function(err, data) {
+    console.log(data);
+    res.render('account', {user: req.user, profile: data});
 
 
 
