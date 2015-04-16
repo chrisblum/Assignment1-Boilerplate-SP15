@@ -32,11 +32,9 @@ var FACEBOOK_CLIENT_ID = process.env.FACEBOOK_CLIENT_ID;
 var FACEBOOK_CLIENT_SECRET = process.env.FACEBOOK_CLIENT_SECRET;
 var FACEBOOK_CALLBACK_URL = process.env.FACEBOOK_CALLBACK_URL;
 var FACEBOOK_ACCESS_TOKEN = "";
-// var FACEBOOK_SCOPE = { email, user_about_me, user_birthday, user_location, publish_stream};
 
 
 //connect to database
-// mongoose.connect(process.env.MONGODB_CONNECTION_URL);
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/Assignment1-Boilerplate-SP15');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -172,7 +170,7 @@ app.get('/login', function(req, res){
 
 app.get('/account', ensureAuthenticated, function(req, res){
 
-  graph.setAccessToken(req.session.access_token);
+  graph.setAccessToken(req.user.access_token);
   graph.get('/me', function(err, data) {
     console.log(data);
   });
@@ -227,7 +225,7 @@ app.get('/auth/instagram',
 app.get('/auth/instagram/callback', 
   passport.authenticate('instagram', { failureRedirect: '/login'}),
   function(req, res) {
-    res.redirect('/account');
+    res.redirect('/account', {fromInsta: true});
   });
 
 
@@ -241,7 +239,7 @@ app.get('/auth/facebook',
 
 
 app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { successRedirect: '/account', failureRedirect: '/login'}));
+  passport.authenticate('facebook', { successRedirect: '/account', {fromFacebook: true}, failureRedirect: '/login'}));
 
 app.get('/logout', function(req, res){
   req.logout();
