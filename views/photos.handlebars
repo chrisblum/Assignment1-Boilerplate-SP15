@@ -1,10 +1,15 @@
-<p>User Name:{{user.username}}</p>
-<p>Display Name:{{user.displayName}}</p>
-<p>Name:{{user.name}}</p>
+<center>
 
+<h2>User Name: {{user.username}}</h2>
+<h3>Display Name: {{user.displayName}}</h3>
+
+<div style="width:1000px;">
 {{#each photos}}
   <img src="{{url}}" class="img-responsive" class="img hashtag-img">
 {{/each}}
+</div>
 
 <br>
 <a href="/logout"><b>LOGOUT</b></a>
+
+</center>
