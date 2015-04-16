@@ -159,6 +159,20 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/login');
 }
 
+function ensureAuthenticatedInsta(req, res, next) {
+  if (req.isAuthenticated()) { 
+    return next(); 
+  }
+  res.redirect('/auth/instagram');
+}
+
+function ensureAuthenticatedFacebook(req, res, next) {
+  if (req.isAuthenticated()) { 
+    return next(); 
+  }
+  res.redirect('/auth/facebook');
+}
+
 //routes
 app.get('/', function(req, res){
   res.render('login');
@@ -168,7 +182,7 @@ app.get('/login', function(req, res){
   res.render('login', { user: req.user });
 });
 
-app.get('/account', ensureAuthenticated, function(req, res){
+app.get('/account', ensureAuthenticatedFacebook, function(req, res){
 
   var query  = models.User.where({ name: req.user.username });
   query.findOne(function (err, user) {
@@ -210,7 +224,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
 
 });
 
-app.get('/story', ensureAuthenticated, function(req, res){
+app.get('/story', ensureAuthenticatedFacebook, function(req, res){
 
   var query  = models.User.where({ name: req.user.username });
   query.findOne(function (err, user) {
@@ -228,7 +242,7 @@ app.get('/story', ensureAuthenticated, function(req, res){
 });
 
 
-app.get('/photos', ensureAuthenticated, function(req, res){
+app.get('/photos', ensureAuthenticatedInstagram, function(req, res){
   var query  = models.User.where({ name: req.user.username });
   query.findOne(function (err, user) {
     if (err) return handleError(err);
