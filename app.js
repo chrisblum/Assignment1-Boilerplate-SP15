@@ -175,7 +175,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
     if (err) return handleError(err);
     if (user) {
 
-  graph.setAccessToken(access_token: user.access_token)
+  graph.setAccessToken(user.access_token)
   graph.get('/me', function(err, data) {
     console.log(data);
   });
