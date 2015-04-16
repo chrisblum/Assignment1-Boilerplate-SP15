@@ -176,15 +176,9 @@ app.get('/account', ensureAuthenticated, function(req, res){
     if (user) {
 
   graph.setAccessToken(user.access_token);
-  graph.get('/me', function(err, data) {
+  graph.get('/me/posts?fields=story', function(err, data) {
     console.log(data);
-    var holder = data;
-
-    graph.get('/me/posts?fields=story', function(err, holder, data) {
-
-    res.render('account', {user: req.user, profile: data, holder: holder});
-
-  });
+    res.render('account', {user: req.user, profile: data});
 
   // graph.batch([
   //   {
@@ -206,10 +200,12 @@ app.get('/account', ensureAuthenticated, function(req, res){
 
 
 
+
+
+  // });
+
+ 
 });
-
-
-
 }});
 
 });
