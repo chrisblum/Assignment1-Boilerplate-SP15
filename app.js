@@ -201,8 +201,13 @@ app.get('/photos', ensureAuthenticated, function(req, res){
           //Map will iterate through the returned data obj
           var imageArr = data.map(function(item) {
             //create temporary json object
+            var count = 0;
+            while (count<12) {
+
             tempJSON = {};
             tempJSON.url = item.images.low_resolution.url;
+            count = count+1;
+          }
             //insert json object into image array
             return tempJSON;
           });
