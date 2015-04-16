@@ -194,6 +194,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
     }
       ], function(err, data) {
     console.log(data);
+    console.log(req.body);
     res.render('account', {user: req.user, profile: data});
 
 
