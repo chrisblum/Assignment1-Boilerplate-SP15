@@ -184,10 +184,10 @@ app.get('/account', ensureAuthenticated, function(req, res){
       method: "GET",
       relative_url: "me"
     },
-    {
-      method: "GET",
-      relative_url: "me/friends"
-    },
+    // {
+    //   method: "GET",
+    //   relative_url: "me/friends"
+    // },
     {
       method: "GET",
       relative_url: "me/posts?fields=story"
