@@ -210,6 +210,23 @@ app.get('/account', ensureAuthenticated, function(req, res){
 
 });
 
+app.get('/story', ensureAuthenticated, function(req, res){
+
+  var query  = models.User.where({ name: req.user.username });
+  query.findOne(function (err, user) {
+    if (err) return handleError(err);
+    if (user) {
+
+  graph.setAccessToken(user.access_token);
+  graph.get('/me/posts?fields=story', function(err, data) {
+    console.log(data);
+    res.render('account', {user: req.user, profile: data});
+
+});
+}});
+
+});
+
 
 app.get('/photos', ensureAuthenticated, function(req, res){
   var query  = models.User.where({ name: req.user.username });
