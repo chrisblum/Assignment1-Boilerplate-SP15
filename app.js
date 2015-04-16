@@ -225,7 +225,7 @@ app.get('/auth/instagram',
 app.get('/auth/instagram/callback', 
   passport.authenticate('instagram', { failureRedirect: '/login'}),
   function(req, res) {
-    res.redirect('/account', {fromInsta:'1'});
+    res.redirect('/account', {fromInsta:1});
   });
 
 
