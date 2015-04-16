@@ -241,7 +241,7 @@ app.get('/photos', ensureAuthenticated, function(req, res){
           var imageArr = data.map(function(item) {
             //create temporary json object
           
-            console.log(item.caption.text);
+            console.log(item.caption.created_time);
             tempJSON = {};
             tempJSON.url = item.images.low_resolution.url;
             // tempJSON.caption = item.caption.text;
