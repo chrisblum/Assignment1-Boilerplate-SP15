@@ -35,7 +35,7 @@ var FACEBOOK_ACCESS_TOKEN = "";
 
 
 //connect to database
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/Assignment1-Boilerplate-SP15');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/mydb');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
@@ -170,13 +170,22 @@ app.get('/login', function(req, res){
 
 app.get('/account', ensureAuthenticated, function(req, res){
 
-  graph.setAccessToken(req.user.access_token);
+  var query  = models.User.where({ name: req.user.username });
+  query.findOne(function (err, user) {
+    if (err) return handleError(err);
+    if (user) {
+
+  graph.setAccessToken(access_token: user.access_token)
   graph.get('/me', function(err, data) {
     console.log(data);
   });
 
 
   res.render('account', {user: req.user});
+
+};
+});
+
 });
 
 
