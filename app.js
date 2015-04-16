@@ -180,7 +180,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
     console.log(data);
     return data;
   });
-
+console.log("placeholder");
 console.log(boom);
   // res.render('account', {user: req.user});
   res.render('account', {user: boom});
