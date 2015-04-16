@@ -177,6 +177,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
 
   graph.setAccessToken(user.access_token);
   graph.get('/me', function(err, data) {
+    console.log(data);
     res.render('account', {user: req.user, profile: data});
 
   // graph.batch([
