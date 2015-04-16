@@ -241,12 +241,12 @@ app.get('/photos', ensureAuthenticated, function(req, res){
           var imageArr = data.map(function(item) {
             //create temporary json object
           
-            console.log(item);
+            console.log(item.images);
             tempJSON = {};
             tempJSON.url = item.images.low_resolution.url;
-            tempJSON.caption = item.caption.text;
+            // tempJSON.caption = item.caption.text;
 
-            console.log(item.caption.text);
+
             //insert json object into image array
             return tempJSON;
           });
