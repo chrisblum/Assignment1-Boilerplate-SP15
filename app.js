@@ -176,37 +176,35 @@ app.get('/account', ensureAuthenticated, function(req, res){
     if (user) {
 
   graph.setAccessToken(user.access_token);
-  // graph.get('/me', function(err, data) {
+  graph.get('/me', function(err, data) {
+    res.render('account', {user: req.user, profile: data});
+
+  // graph.batch([
+  //   {
+  //     method: "GET",
+  //     relative_url: "me"
+  //   },
+  //   // {
+  //   //   method: "GET",
+  //   //   relative_url: "me/friends"
+  //   // },
+  //   {
+  //     method: "GET",
+  //     relative_url: "me/posts?fields=story"
+  //   }
+  //     ], function(err, data) {
+  //   console.log(data);
   //   res.render('account', {user: req.user, profile: data});
 
-  graph.batch([
-    {
-      method: "GET",
-      relative_url: "me"
-    },
-    // {
-    //   method: "GET",
-    //   relative_url: "me/friends"
-    // },
-    {
-      method: "GET",
-      relative_url: "me/posts?fields=story"
-    }
-      ], function(err, data) {
-    console.log(data);
-    console.log(req.body);
-    res.render('account', data);
 
 
 
 
+  // });
 
-  });
-
-  // res.render('account', {user: req.user});
  
-};
 });
+}});
 
 });
 
