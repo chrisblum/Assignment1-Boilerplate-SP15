@@ -7,7 +7,11 @@
 
 <a href="/story"><div class="btn btn-danger">Your Activity</div></a>
 
-{{#each profile.data}} {{story}} {{id}} {{/each}}
+<container-fluid>
+{{#each profile.data}} 
+<div class="col-xs-6">{{story}}</div> <div class="col-xs-6"> {{id}}</div> 
+{{/each}}
+</container-fluid>
 
 {{#each profile.body}}  {{id}} {{/each}}
 <br>
