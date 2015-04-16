@@ -172,9 +172,8 @@ app.get('/login', function(req, res){
 
 app.get('/account', ensureAuthenticated, function(req, res){
 
-  graph
-    .setAccessToken(req.session.access_token);
-    .get('/me', function(err, data) {
+  graph.setAccessToken(req.session.access_token);
+  graph.get('/me', function(err, data) {
     console.log(data);
   });
 
