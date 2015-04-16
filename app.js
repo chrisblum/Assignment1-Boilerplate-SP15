@@ -180,11 +180,11 @@ app.get('/account', ensureAuthenticated, function(req, res){
     console.log(data);
     var holder = data;
 
-    graph.get('/me/posts?fields=story'), function(err, holder, data) {
+    graph.get('/me/posts?fields=story', function(err, holder, data) {
 
     res.render('account', {user: req.user, profile: data, holder: holder});
 
-  };
+  });
 
   // graph.batch([
   //   {
