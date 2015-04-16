@@ -7,10 +7,6 @@
 <h4>Gender: {{profile.body.gender}}</h4>
 <h4>Gender: {{#each profile.data.story}}   {{/each}}</h4>
 
-1 {{profile.body[1].gender}}
-2 {{profile.body[2].gender}}
-
-
 {{#each profile.body}}  {{id}} {{/each}}
 <br>
 <a href="/auth/instagram"><div type="button" class="btn btn-default">Go to <b>Photos</b></div></a>
@@ -18,3 +14,9 @@
 <br>
 
 </center>
+
+<script>
+
+console.log(profile)
+
+</script>
