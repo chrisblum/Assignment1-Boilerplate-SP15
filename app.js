@@ -225,7 +225,7 @@ app.get('/auth/instagram',
 app.get('/auth/instagram/callback', 
   passport.authenticate('instagram', { failureRedirect: '/login'}),
   function(req, res) {
-    res.redirect('/account', {fromInsta: true});
+    res.redirect('/account', {fromInsta:'1'});
   });
 
 
@@ -239,7 +239,7 @@ app.get('/auth/facebook',
 
 
 app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { successRedirect: '/account', {fromFacebook: true}, failureRedirect: '/login'}));
+  passport.authenticate('facebook', { successRedirect: '/account', failureRedirect: '/login'}));
 
 app.get('/logout', function(req, res){
   req.logout();
