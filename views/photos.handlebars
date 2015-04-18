@@ -40,12 +40,12 @@
 </div>
 <br>
 
-<h3>Recently Posted</h3>
+<h3 style="margin-top:40px;">Recently Posted</h3>
 <div class="container-fluid" class="display:block;">
 {{#each feed}}
 
   <img src="{{url}}" class="col-xs-3">
-<!--  <div class="col-xs-3">{{textbox.text}}</div> -->
+ <div class="col-xs-3">{{textbox.text}}</div>
 
  <!--  {{textbox.text}} -->
 {{/each}}
@@ -55,6 +55,7 @@
 <div class="container-fluid">
 {{#each photos}}
   <img src="{{url}}" class="col-xs-3">
+  <div class="col-xs-3">{{textbox.text}}</div>
 {{/each}}
 </div>
 
