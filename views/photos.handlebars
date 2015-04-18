@@ -2,29 +2,32 @@
 
 <container-fluid>
 
+<div class="col-xs-2"><img src="{{user._json.data.profile_picture}}"></div>
+<div class="col-xs-8">Instagram Photo Activity</div>
+<div class="col-xs-2"></div>
+
 <div class="col-xs-2"></div>
 <div class="col-xs-4">Your Display Name:</div>
-<div class="col-xs-4"></div>
+<div class="col-xs-4">{{user.displayName</div>
 <div class="col-xs-2"></div>
 
 <div class="col-xs-2"></div>
 <div class="col-xs-4">Your Username:</div>
-<div class="col-xs-4"></div>
+<div class="col-xs-4">{{user.username}}</div>
 <div class="col-xs-2"></div>
 
 <div class="col-xs-2"></div>
 <div class="col-xs-4">Your bio: </div>
-<div class="col-xs-4"></div>
+<div class="col-xs-4">{{user._json.data.bio}}</div>
 <div class="col-xs-2"></div>
 
 <div class="col-xs-2"></div>
 <div class="col-xs-4">Your website: </div>
-<div class="col-xs-4"></div>
+<div class="col-xs-4">{{user._json.data.website}}</div>
 <div class="col-xs-2"></div>
 
 </container-fluid>
 
-{{user._json.data.profile_picture}}
 <h2>User Name: {{user.username}}</h2>
 <h3>Display Name: {{user.displayName}}</h3>
 <br>
