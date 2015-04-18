@@ -306,7 +306,7 @@ app.get('/photos', ensureAuthenticated, function(req, res){
                   return tempJSON2;
                 });
           
-            console.log(imageArr2);
+            console.log(req.user);
 
 
           res.render('photos', {photos: imageArr, feed: imageArr2, user: req.user});
