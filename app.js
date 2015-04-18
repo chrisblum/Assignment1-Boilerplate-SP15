@@ -69,24 +69,68 @@ passport.use(new InstagramStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
+    // models.User.findOrCreate({
+    //   "name": profile.username,
+    //   "id": profile.id,
+    //   "access_token": accessToken 
+    // }, function(err, user, created) {
+      
+    //   // created will be true here
+    //   models.User.findOrCreate({}, function(err, user, created) {
+    //     // created will be false here
+    //     process.nextTick(function () {
+    //       // To keep the example simple, the user's Instagram profile is returned to
+    //       // represent the logged-in user.  In a typical application, you would want
+    //       // to associate the Instagram account with a user record in your database,
+    //       // and return that user instead.
+    //       return done(null, profile);
+    //     });
+    //   })
+    // });
+
     models.User.findOrCreate({
       "name": profile.username,
       "id": profile.id,
       "access_token": accessToken 
     }, function(err, user, created) {
       
-      // created will be true here
-      models.User.findOrCreate({}, function(err, user, created) {
-        // created will be false here
-        process.nextTick(function () {
-          // To keep the example simple, the user's Instagram profile is returned to
-          // represent the logged-in user.  In a typical application, you would want
-          // to associate the Instagram account with a user record in your database,
-          // and return that user instead.
-          return done(null, profile);
+      if (!user) {
+        newUser = new models.User({
+          "name": profile.username,
+          "ig_id": profile.id,
+          "ig_access_token": accessToken
         });
+
+        newUser.save( function(err) {
+          return done(null,newUser);
+        });
+      }
+
+      else {
+        user.ig_access_token = accessToken;
+        user.save();
+
+        process.nextTick(function () {
+       
+          return done(null, user);
+        });
+
+      }
+      // created will be true here
+      // models.User.findOrCreate({}, function(err, user, created) {
+      //   // created will be false here
+      //   process.nextTick(function () {
+       
+      //     return done(null, profile);
+      //   });
       })
     });
+
+
+
+
+
+
   }
 ));
 
