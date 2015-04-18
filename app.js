@@ -297,16 +297,16 @@ app.get('/photos', ensureAuthenticated, function(req, res){
 
                     console.log(item);
                   tempJSON2 = {};
-                  tempJSON2.url = item.images.low_resolution.url;
+                  // tempJSON2.url = item.images.low_resolution.url;
 
                   return tempJSON2;
                 });
-              }
+          
             
 
 
           res.render('photos', {photos: imageArr, feed: imageArr2, user: req.user});
-
+        }
         });
         }
       }); 
