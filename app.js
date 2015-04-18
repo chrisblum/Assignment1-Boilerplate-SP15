@@ -289,16 +289,17 @@ app.get('/photos', ensureAuthenticated, function(req, res){
             return tempJSON;
           });
 
-            Instagram.users.self({
+            Instagram.users.recent({
               access_token: user.access_token,
+              user_id: user.id,
               complete: function(data) {
 
                 var imageArr2 = data.map(function(item) {
 
                     console.log(item);
                   tempJSON2 = {};
-                  tempJSON2.url = item.images.low_resolution.url;
-                  tempJSON2.textbox = item.caption;
+                  // tempJSON2.url = item.images.low_resolution.url;
+                  // tempJSON2.textbox = item.caption;
 
                   return tempJSON2;
                 });
