@@ -10,8 +10,13 @@
 <h3>Pics you recently posted</h3>
 <div class="container-fluid">
 {{#each feed}}
-  <img src="{{url}}" class="col-xs-3">
-  <br>
+
+<div class="display:block;">
+
+  <img src="{{url}}" class="col-xs-3" style="margin-bottom:5px;">
+ <div class="col-xs-3" style="margin-bottom:15px;">{{textbox.text}}</div>
+
+</div>
 
  <!--  {{textbox.text}} -->
 {{/each}}
