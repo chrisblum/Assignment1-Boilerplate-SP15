@@ -289,7 +289,25 @@ app.get('/photos', ensureAuthenticated, function(req, res){
             return tempJSON;
           });
 
-          res.render('photos', {photos: imageArr, user: req.user});
+            Instagram.users.self({
+              access_token: user.access_token,
+              complete: function(data) {
+
+                var imageArr2 = data.map(function(item) {
+
+                    console.log(item);
+                  tempJSON2 = {};
+                  tempJSON2.url = item.images.low_resolution.url;
+
+                  return tempJSON2;
+                });
+              }
+            
+
+
+          res.render('photos', {photos: imageArr, feed: imageArr2, user: req.user});
+
+        });
         }
       }); 
     }
