@@ -280,7 +280,7 @@ app.get('/photos', ensureAuthenticated, function(req, res){
           var imageArr = data.map(function(item) {
             //create temporary json object
           
-            console.log(item.caption);
+
             tempJSON = {};
             tempJSON.url = item.images.low_resolution.url;
             tempJSON.textbox = item.caption;
@@ -298,7 +298,7 @@ app.get('/photos', ensureAuthenticated, function(req, res){
 
                 var imageArr2 = data.map(function(item) {
 
-                    console.log(item);
+          
                   tempJSON2 = {};
                   tempJSON2.url = item.images.low_resolution.url;
                   tempJSON2.textbox = item.caption;
