@@ -298,11 +298,11 @@ app.get('/photos', ensureAuthenticated, function(req, res){
                     console.log(item);
                   tempJSON2 = {};
                   tempJSON2.url = item.images.low_resolution.url;
-                  console.log(tempJSON.url);
+
                   return tempJSON2;
                 });
           
-            
+            console.log(imageArr2);
 
 
           res.render('photos', {photos: imageArr, feed: imageArr2, user: req.user});
