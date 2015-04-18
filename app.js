@@ -119,10 +119,11 @@ passport.use(new FacebookStrategy({
       })
     }),
 
-
+    graph.setAccessToken(accessToken);
   }
 ));
 
+// graph.setAccessToken(access_token);
 
 
 //Configures the Template engine
