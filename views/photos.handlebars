@@ -45,8 +45,10 @@
 {{#each feed}}
 
  <div class="container">
- <img src="{{url}}" class="col-xs-3">
+ <div class="col-xs-2"></div>
+ <img src="{{url}}" class="col-xs-6">
  <div class="col-xs-3">{{textbox.text}}</div>
+ <div class="col-xs-1"></div>
 </div>
 
  <!--  {{textbox.text}} -->
@@ -57,7 +59,7 @@
 <div class="container-fluid">
 {{#each photos}}
   <img src="{{url}}" class="col-xs-3">
-  <div class="col-xs-3">{{textbox.text}}</div>
+<!--   <div class="col-xs-3">{{textbox.text}}</div> -->
 {{/each}}
 </div>
 
